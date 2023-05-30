@@ -3,16 +3,52 @@ name: Java CI
 on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+  MavenBuild:
+     runs-on: ubuntu-latest
+     steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+        
+      - name: Code Build
         uses: actions/setup-java@v3
         with:
+          distribution: "temurin"
           java-version: '11'
-          distribution: 'temurin'
-    
+      -  run: |
+            pwd && ls -ltr 
+            mvn clean install 
+      - name: Code validate
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run: |
+            mvn validate
+      - name: Code compile
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run: |
+            mvn compile
+            
+      - name: Code Test
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run: | 
+            mvn test
+
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven
+         #the Maven package target in non-interactive mode to ensure that your code builds, tests pass, and a package can be created.
+         #Forces a check for updated releases and snapshots on remote repositories
         run: mvn --batch-mode --update-snapshots package
+
+       
