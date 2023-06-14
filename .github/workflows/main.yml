@@ -34,7 +34,7 @@ jobs:
             mvn test
 
       
-      - name: Build with Maven
+      - name: Build with maven
          #run the Maven package target in non-interactive mode to ensure that your code builds, tests pass, and a package can be created.
          #Forces a check for updated releases and snapshots on remote repositories
         run: mvn --batch-mode --update-snapshots package
