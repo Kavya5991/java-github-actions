@@ -1,7 +1,7 @@
 name: JavaCI
 on: [push]
 jobs:
-  MavenBuild:
+  Mavenbuild:
      runs-on: ubuntu-latest
      steps:
       - name: CodeCheckout
