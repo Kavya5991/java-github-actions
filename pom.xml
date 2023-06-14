@@ -1,51 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>helloworld</groupId>
-  <artifactId>helloworld</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>Hello world sample web app</name>
-  <url>http://maven.apache.org</url>
+name: JavaCI
+on: [push]
+jobs:
+  Mavenbuild:
+     runs-on: ubuntu-latest
+     steps:
+      - name: CodeCheckout
+        uses: actions/checkout@v3
+        
+      
+            
+      - name: Code validate
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run: 
+            mvn validate
+            
+      - name: Code compile
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run: 
+            mvn compile
+            
+      - name: Code Test
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run:  
+            mvn test
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+      
+      - name: Build with maven
+         #run the Maven package target in non-interactive mode to ensure that your code builds, tests pass, and a package can be created.
+         #Forces a check for updated releases and snapshots on remote repositories
+        run: mvn --batch-mode --update-snapshots package
+      
+        
+      - name: Code verify
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run:  
+            mvn verify
+            
+      - name: Code install
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: '11'
+      -  run: 
+            mvn clean install
 
-  <build>
-    <finalName>helloworld</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.2</version>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-  </properties>
-	
-</project>
+      - name: Build and Analyze
+        env:
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: mvn -B verify -s settings.xml org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=java-maven-demo -Dsonar.projectName='java-maven-demo'
