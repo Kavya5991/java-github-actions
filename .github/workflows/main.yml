@@ -41,12 +41,6 @@ jobs:
          #Forces a check for updated releases and snapshots on remote repositories
         run: mvn --batch-mode --update-snapshots package
       
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
         
       - name: Code verify
         uses: actions/setup-java@v3
@@ -64,4 +58,9 @@ jobs:
       -  run: 
             mvn clean install
 
-       
+    - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=java-maven-demo -Dsonar.projectName='java-maven-demo'
