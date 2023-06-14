@@ -4,7 +4,7 @@ jobs:
   MavenBuild:
      runs-on: ubuntu-latest
      steps:
-      - name: Code Checkout
+      - name: CodeCheckout
         uses: actions/checkout@v3
         
       
