@@ -1,5 +1,26 @@
-<settings>
-    <pluginGroups>
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+
+  <servers>
+    <server>
+      <id>nexus</id>
+      <username>maven</username>
+      <password>admin123</password>
+    </server>
+    <server>
+      <id>nexus</id>
+      <username>maven</username>
+      <password>admin123</password>
+    </server>
+    <server>
+        <id>sonar</id>
+        <username>admin</username>
+        <password>Karthik@1012</password>
+    </server>
+  </servers>
+   <pluginGroups>
         <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
     </pluginGroups>
     <profiles>
@@ -16,4 +37,13 @@
             </properties>
         </profile>
      </profiles>
+  <mirrors>
+    <mirror>
+      <id>central</id>
+      <name>central</name>
+      <url>http://192.168.1.153:8081/repository/maven-public/</url>
+      <mirrorOf>*</mirrorOf>
+    </mirror>
+  </mirrors>
+
 </settings>
