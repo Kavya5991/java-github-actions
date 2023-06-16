@@ -81,7 +81,7 @@
         <configuration>
           
           <tagBase>
-         https://github.com/Kavya5991/my-app/tags
+         https://github.com/Kavya5991/java-github-actions/tags
           </tagBase>
           
         </configuration>			  
@@ -120,9 +120,9 @@
   </distributionManagement>
   
   <scm>
-    <connection>scm:git:https://github.com/Kavya5991/my-app.git</connection>
-    <url>https://github.com/Kavya5991/my-app</url>
-    <developerConnection>scm:git:https://github.com/Kavya5991/my-app.git</developerConnection>
+    <connection>scm:git:https://github.com/Kavya5991/java-github-actions.git</connection>
+    <url>https://github.com/Kavya5991/java-github-actions</url>
+    <developerConnection>scm:git:https://github.com/Kavya5991/java-github-actions.git</developerConnection>
     <tag>helloworld-1.2</tag>
   </scm>	
 </project>
