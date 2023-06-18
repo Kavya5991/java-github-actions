@@ -35,4 +35,4 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=http://172.21.252.231:9000/ -Dsonar.projectKey=java-base-project -Dsonar.token=3d35b569838af7a3c6d442b63b1c6ba93b603786
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=http://172.21.252.231:9000/ -Dsonar.projectKey=java-base-project -Dsonar.token=7a2626fd931d19bf893a7ecdf5161ab7703717c4
