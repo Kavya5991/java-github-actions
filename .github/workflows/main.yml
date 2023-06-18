@@ -7,6 +7,12 @@ on:
 
 
 jobs:
+  sonarqube-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check SonarQube server connectivity
+        run: curl --head --fail http://172.21.252.231:9000
   build:
     name: Build
     runs-on: ubuntu-latest
